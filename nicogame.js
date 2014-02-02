@@ -7,7 +7,6 @@ var tables = 9;
 var tablePositions = new Array();
 var wichOne = 0;
 var boludos = 10;
-
 //======================================== NICO CLASS ===================================================================
 Nico = Class.create(Sprite, {
     initialize: function() {
@@ -19,16 +18,24 @@ Nico = Class.create(Sprite, {
 
     onenterframe: function() {
 		if(game.input.left && !game.input.right){
-			this.x -= moveSpeed;
+			if(this.x > 110){
+				this.x -= moveSpeed;
+			}
 		}
 		else if(game.input.right && !game.input.left){
-			this.x += moveSpeed;
+			if(this.x < 836){
+				this.x += moveSpeed;
+			}
 		}
 		if(game.input.up && !game.input.down){
-			this.y -= moveSpeed;
+			if(this.y > 72){
+				this.y -= moveSpeed;
+			}
 		}
 		else if(game.input.down && !game.input.up){
-			this.y += moveSpeed;
+	        if(this.y < 516){
+				this.y += moveSpeed;
+			}
 		}
     }
 });
@@ -55,7 +62,6 @@ Table = Class.create(Sprite, {
 			if(this.destructible){
 				tables--;
 				game.score -= 40;
-				console.log(tables);
 				this.destructible = false;
 			}
 		}
@@ -69,10 +75,11 @@ Table = Class.create(Sprite, {
 Boludo = Class.create(Sprite, {
 	 initialize: function(){
 		 Sprite.call(this,65,80);
-		 this.image = game.assets['boludo.png'];
+		 this.image = game.assets['boludonormal.png'];
 		 this.x = tablePositions[wichOne][0]+10;
 		 this.y = tablePositions[wichOne][1]+10;
 		 wichOne++;
+		 listenable = false;
 	 },
 	 onenterframe: function(){
 		 if(this.intersect(nico)){
@@ -104,7 +111,7 @@ Boludo = Class.create(Sprite, {
 // =========================== GAME CODE =================================================================================
 window.onload = function() {
     game = new Game(stgWidth, stgHeight);
-    game.preload('nico.png','table.png','broken.png','boludo.png','bg.png');
+    game.preload('nico.png','table.png','broken.png','boludo.png','bg.png','boludonormal.png');
 
     game.onload = function() { 
 		bg = new Sprite(stgWidth, stgHeight);	
